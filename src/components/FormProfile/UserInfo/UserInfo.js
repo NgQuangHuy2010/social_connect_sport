@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { Controller } from 'react-hook-form';
 import classNames from "classnames/bind";
 import locale from "antd/es/date-picker/locale/vi_VN";
-
 import styles from "./UserInfo.module.scss";
 import AddressForm from "~/components/LocationAddress/AddressForm";
 

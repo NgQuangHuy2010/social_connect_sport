@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,forwardRef  } from "react";
 import { Select, Form, Input } from "antd";
 import locations from "./locations.json"; // Import dữ liệu từ file JSON
 import { useTranslation } from "react-i18next";
 const { Option } = Select;
 
-const AddressForm = () => {
+const AddressForm = forwardRef(({ value, onChange }, ref) => {
   const { t } = useTranslation();
   const [wards, setWards] = useState([]); // Phường/Xã
   const [selectedCity, setSelectedCity] = useState(null); // Tỉnh/Thành phố đã chọn
@@ -13,7 +13,19 @@ const AddressForm = () => {
   const handleCityChange = (cityCode) => {
     const city = locations.find((item) => item.code === cityCode);
     setSelectedCity(city);
+    setSelectedDistrict(null);
+    setWards([]);
+    triggerChange({ city: cityCode, district: null, ward: null });
   };
+  const triggerChange = (changedValue) => {
+    if (onChange) {
+      onChange({
+        ...value,
+        ...changedValue,
+      });
+    }
+  };
+  
 
   // Hàm xử lý thay đổi quận
   const handleDistrictChange = (districtCode) => {
@@ -22,6 +34,7 @@ const AddressForm = () => {
     );
     setSelectedDistrict(district);
     setWards(district?.wards || []); // Cập nhật danh sách phường
+    triggerChange({ district: districtCode, ward: null });
   };
 
   // Sử dụng useEffect để reset quận và phường khi thay đổi thành phố
@@ -35,10 +48,16 @@ const AddressForm = () => {
     <div className="row">
     <div className="col-12">
       <Form.Item
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
         label={t("modal-profile.label-form-infor-personal-address")}
         name="address"
       >
         <Input
+         value={value?.address || ""}
+         onChange={(e) =>
+          onChange({ ...value, address: e.target.value })
+        }
           placeholder={t("modal-profile.placeholder-form-infor-personal-address")}
         />
       </Form.Item>
@@ -47,6 +66,8 @@ const AddressForm = () => {
     {/* Thành phố/Tỉnh */}
     <div className="col-4">
       <Form.Item
+       labelCol={{ span: 24 }}
+       wrapperCol={{ span: 24 }}
         label={t("modal-profile.label-form-infor-personal-city")}
         name="city"
       >
@@ -68,6 +89,8 @@ const AddressForm = () => {
     {/* Quận/Huyện */}
     <div className="col-4">
       <Form.Item
+       labelCol={{ span: 24 }}
+       wrapperCol={{ span: 24 }}
         label={t("modal-profile.label-form-infor-personal-district")}
         name="district"
       >
@@ -90,14 +113,17 @@ const AddressForm = () => {
     {/* Phường/Xã */}
     <div className="col-4">
       <Form.Item
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
         label={t("modal-profile.label-form-infor-personal-ward")}
         name="ward"
       >
         <Select
           placeholder={t("modal-profile.placeholder-form-infor-personal-ward")}
           style={{ width: "100%" }}
-          value={undefined} // Đảm bảo giá trị là undefined khi chưa chọn phường
+          value={value?.ward || undefined} // Đảm bảo giá trị là undefined khi chưa chọn phường
           disabled={!selectedDistrict} // Disabled nếu chưa chọn quận
+          onChange={(wardCode) => triggerChange({ ward: wardCode })}
         >
           {wards.map((ward) => (
             <Option key={ward.code} value={ward.code}>
@@ -109,6 +135,6 @@ const AddressForm = () => {
     </div>
   </div>
   );
-};
+});
 
 export default AddressForm;

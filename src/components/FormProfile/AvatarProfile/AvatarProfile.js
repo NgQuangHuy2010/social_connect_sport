@@ -181,7 +181,7 @@ const AvatarProfile = () => {
         />
 
         <div className="mt-5">
-          <label className="pb-3">{t("modal-profile.label-form-infor-personal-about_me")}</label>
+          <label className="pb-3 fs-4">{t("modal-profile.label-form-infor-personal-about_me")}</label>
           <span
             onClick={enableEditing}
             className={cx("edit-icon", { active: isEditing },"px-2")}

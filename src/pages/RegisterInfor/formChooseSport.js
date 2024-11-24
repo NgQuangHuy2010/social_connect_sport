@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Checkbox, Button } from "antd";
-import styles from "./formChoooseSport.module.scss"; // Import file CSS
+import styles from "./formStepsRegisterUser.module.scss"; // Import file CSS
 import classNames from "classnames/bind"; //npm i classnames
 const cx = classNames.bind(styles);
 const sportsOptions = [
@@ -172,11 +172,12 @@ const ChooseSport = ({ initialData, onSubmit }) => {
 
   return (
     <form
+    
       onSubmit={handleSubmit((data) => {
         onSubmit(data.sports); // Truyền dữ liệu lên component cha
       })}
     >
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center pt-5 ">
         <Controller
           name="sports"
           control={control}
@@ -194,9 +195,9 @@ const ChooseSport = ({ initialData, onSubmit }) => {
         />
       </div>
 
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end mt-3">
         <Button  type="primary" htmlType="submit" className="mt-3 px-5 ">
-          Tiếp tục
+          Tiếp tục <i className="fa-solid fa-arrow-right"></i>
         </Button>
       </div>
     </form>

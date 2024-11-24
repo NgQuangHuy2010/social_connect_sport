@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Button, Steps, message } from "antd";
 import ChooseSport from "./formChooseSport";
 import RegisterInfoUser from "./formRegisterInfoUser";
-
+import styles from "./formStepsRegisterUser.module.scss"; // Import file CSS
+import classNames from "classnames/bind"; //npm i classnames
+const cx = classNames.bind(styles);
 const RegisterInformation = () => {
   const [current, setCurrent] = useState(0);
 
@@ -65,7 +67,7 @@ const RegisterInformation = () => {
       title: "Hoàn thành",
       content: (
         <div>
-          <h3>Đăng ký thành công</h3>
+          <h1><img src="https://img.icons8.com/papercut/80/ok.png" alt="icon success"/> Đăng ký thành công</h1>
         </div>
       ),
     },
@@ -75,22 +77,26 @@ const RegisterInformation = () => {
     key: item.title,
     title: item.title,
   }));
-
   return (
     <div className="p-5 m-5">
       <Steps current={current} items={items} />
-      <div style={{ marginTop: 16 }}>{steps[current].content}</div>
+      <div
+      className={cx("step-content-container active","d-flex justify-content-center align-items-center")}
+      style={{height:"400px",marginTop:50}}
+      >
+        {steps[current].content}
+      </div>
       <div style={{ marginTop: 24 }}>
         {/* Nút Hoàn tất ở bước cuối */}
         {current === steps.length - 1 && (
-          <>
-            <Button type="primary" onClick={handleComplete}>
-              Hoàn tất
-            </Button>
+          <div className="d-flex justify-content-between">
             <Button style={{ margin: "0 8px" }} onClick={prev}>
-              Quay lại
+              <i className="fa-solid fa-arrow-left"></i> Quay lại
             </Button>
-          </>
+            <Button type="primary" onClick={handleComplete}>
+              Hoàn tất <i className="fa-solid fa-check"></i>
+            </Button>
+          </div>
         )}
       </div>
     </div>

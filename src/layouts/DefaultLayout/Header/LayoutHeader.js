@@ -48,7 +48,7 @@ const MENU_ITEM = [
   // },
 ];
 function Header() {
-  const currentUser = false;
+  const currentUser = true;
   const navigate = useNavigate();
   const { i18n, t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);

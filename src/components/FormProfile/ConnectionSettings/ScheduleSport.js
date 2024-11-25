@@ -43,7 +43,7 @@ const ScheduleSport = () => {
     { value: 3, label: t("days.tuesday") },
     { value: 4, label: t("days.wednesday") },
     { value: 5, label: t("days.thursday") },
-    { value: 6, label: t("days.friday") },
+    { value: 6, label: t("days.friday") },                   
     { value: 7, label: t("days.saturday") },
     { value: 8, label: t("days.sunday") }
   ];
